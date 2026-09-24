@@ -1,4 +1,4 @@
-import { useAuth0 } from "@auth0/auth0-react";
+import { GenericError, useAuth0 } from "@auth0/auth0-react";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { createContext, type FC, type PropsWithChildren, useContext } from "react";
 import { useParams } from "react-router";
@@ -37,6 +37,11 @@ export const AppContextComponent: FC<PropsWithChildren> = ({ children }) => {
       }
       return await getAccessTokenSilently()
         .then(async (res) => {
+          // auth0-spa-js returns no token when the session ceiling (session_expiry claim) is reached
+          if (!res) {
+            throw new GenericError("login_required", "Auth0 session expired");
+          }
+
           return await loadPreviewApiKey({
             accessToken: res,
             environmentId: envId,
