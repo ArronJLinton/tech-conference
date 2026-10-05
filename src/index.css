@@ -8,7 +8,18 @@
   --color-gray: #3b3b3b;
   --color-creme: #fff7e7;
 
-  --font-family-sans: 'Source Sans 3', Arial, sans-serif;
+  --color-ink: #07080c;
+  --color-panel: #10141c;
+  --color-panel-raised: #161b26;
+  --color-line: #2a3344;
+  --color-cyan: #2ee6ff;
+  --color-violet: #a78bfa;
+  --color-magenta: #e879f9;
+  --color-mist: #93a0b5;
+  --color-paper: #f4f7fb;
+
+  --font-family-sans: 'Inter', 'Source Sans 3', Arial, sans-serif;
+  --font-family-display: 'Space Grotesk', 'Inter', sans-serif;
   --font-family-libre: 'Abhaya Libre', Arial;
 
   --default-font-family: var(--font-family-sans);
@@ -16,6 +27,8 @@
 
 @utility container {
   margin-inline: auto;
+  width: 100%;
+  padding-inline: 1.5rem;
 
   @variant sm {
     max-width: 640px;
@@ -30,11 +43,11 @@
   }
 
   @variant xl {
-    max-width: 1280px;
+    max-width: 1180px;
   }
 
   @variant 2xl {
-    max-width: 1536px;
+    max-width: 1180px;
   }
 }
 
@@ -55,11 +68,26 @@
     border-color: var(--color-gray-200, currentcolor);
   }
   
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-ink);
+    color: var(--color-paper);
+    font-family: var(--font-family-sans);
+  }
+
   p {
     font-family: var(--font-family-sans);
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: var(--font-family-libre);
+    font-family: var(--font-family-display);
+  }
+
+  ::selection {
+    background: var(--color-cyan);
+    color: var(--color-ink);
   }
 }
