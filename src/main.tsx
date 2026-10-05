@@ -33,9 +33,17 @@ const router = createBrowserRouter([
     path: "/",
     element: (
       <QueryClientProvider client={queryClient}>
-        <AppContextComponent>
-          <LandingPage />
-        </AppContextComponent>
+        <Suspense
+          fallback={
+            <div className="flex h-screen w-screen items-center justify-center">
+              <Loader />
+            </div>
+          }
+        >
+          <AppContextComponent>
+            <LandingPage />
+          </AppContextComponent>
+        </Suspense>
       </QueryClientProvider>
     ),
   },

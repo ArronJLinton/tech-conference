@@ -17,20 +17,24 @@ const Footer: FC = () => {
         <div className="grid gap-12 py-16 md:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr] lg:py-20">
           <div>
             <Logo />
-            <p className="mt-4 max-w-xs text-sm leading-relaxed text-mist">{footer.blurb}</p>
-            <ul className="mt-6 flex gap-3">
-              {footer.socials.map((social) => (
-                <li key={social.label}>
-                  <a
-                    href={social.href}
-                    aria-label={social.label}
-                    className={`flex size-9 items-center justify-center rounded-md border border-line text-mist transition-colors hover:border-cyan hover:text-cyan ${focusRing}`}
-                  >
-                    <Icon name={social.icon} />
-                  </a>
-                </li>
-              ))}
-            </ul>
+            {footer.blurb ? (
+              <p className="mt-4 max-w-xs text-sm leading-relaxed text-mist">{footer.blurb}</p>
+            ) : null}
+            {footer.socials.length > 0 ? (
+              <ul className="mt-6 flex gap-3">
+                {footer.socials.map((social) => (
+                  <li key={social.label}>
+                    <a
+                      href={social.href}
+                      aria-label={social.label}
+                      className={`flex size-9 items-center justify-center rounded-md border border-line text-mist transition-colors hover:border-cyan hover:text-cyan ${focusRing}`}
+                    >
+                      <Icon name={social.icon} />
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            ) : null}
           </div>
           {footer.columns.map((column) => (
             <Navigation
@@ -47,15 +51,20 @@ const Footer: FC = () => {
         <Container>
           <div className="flex flex-col gap-3 py-6 text-xs text-mist sm:flex-row sm:items-center sm:justify-between">
             <p>{footer.copyright}</p>
-            <ul className="flex gap-5">
-              {footer.legal.map((link) => (
-                <li key={link.label}>
-                  <a href={link.href} className={`transition-colors hover:text-paper ${focusRing}`}>
-                    {link.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
+            {footer.legal.length > 0 ? (
+              <ul className="flex gap-5">
+                {footer.legal.map((link) => (
+                  <li key={link.label}>
+                    <a
+                      href={link.href}
+                      className={`transition-colors hover:text-paper ${focusRing}`}
+                    >
+                      {link.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            ) : null}
           </div>
         </Container>
       </div>

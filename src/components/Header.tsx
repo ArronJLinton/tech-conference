@@ -15,23 +15,27 @@ const Header: FC = () => {
       <Container>
         <div className="flex min-h-16 items-center gap-6">
           <Logo />
-          <Navigation
-            links={landingContent.navigation}
-            label="Primary"
-            className="hidden lg:block"
-          />
+          {landingContent.navigation.length > 0 ? (
+            <Navigation
+              links={landingContent.navigation}
+              label="Primary"
+              className="hidden lg:block"
+            />
+          ) : null}
           <div className="ml-auto flex items-center gap-1">
             <IconButton label="Search" icon="search" className="hidden sm:flex" />
-            <IconButton
-              label={menuOpen ? "Close menu" : "Open menu"}
-              icon={menuOpen ? "close" : "menu"}
-              expanded={menuOpen}
-              onClick={() => setMenuOpen((open) => !open)}
-              className="lg:hidden"
-            />
+            {landingContent.navigation.length > 0 ? (
+              <IconButton
+                label={menuOpen ? "Close menu" : "Open menu"}
+                icon={menuOpen ? "close" : "menu"}
+                expanded={menuOpen}
+                onClick={() => setMenuOpen((open) => !open)}
+                className="lg:hidden"
+              />
+            ) : null}
           </div>
         </div>
-        {menuOpen ? (
+        {menuOpen && landingContent.navigation.length > 0 ? (
           <div className="border-t border-line bg-ink py-4 lg:hidden">
             <Navigation
               links={landingContent.navigation}
