@@ -15,13 +15,13 @@
 import type { CollectionCodenames } from "../system/collections.generated.ts";
 
 /*
- * Type representing codename of 'Default' collection
+ * Type representing codename of 'Sponsors' collection
  */
-export type DefaultCollectionCodename = keyof Pick<Record<CollectionCodenames, null>, "default">;
+export type SponsorsCollectionCodename = keyof Pick<Record<CollectionCodenames, null>, "sponsorship">;
 
 /*
- * Typeguard for codename of 'Default' collection
+ * Typeguard for codename of 'Sponsors' collection
  */
-export function isDefaultCollectionCodename(value: string | undefined | null): value is DefaultCollectionCodename {
-  return typeof value === "string" && value === ("default" satisfies DefaultCollectionCodename);
+export function isSponsorsCollectionCodename(value: string | undefined | null): value is SponsorsCollectionCodename {
+  return typeof value === "string" && value === ("sponsorship" satisfies SponsorsCollectionCodename);
 }
