@@ -92,6 +92,16 @@ export type LandingPageType = IContentItem<
      * Allowed content types: venue, event, conference, company
      */
     readonly featured_content: Elements.LinkedItemsElement<VenueType | EventType | ConferenceType | CompanyType>;
+
+    /*
+     * URL Slug
+     *
+     * Codename: url_slug
+     * Id: 7a67821c-a330-44fe-a92e-519d0f74aa21
+     * Type: url_slug
+     * Required: true
+     */
+    readonly url_slug: Elements.UrlSlugElement;
   },
   LandingPageTypeCodename,
   LanguageCodenames,
@@ -108,7 +118,8 @@ export type LandingPageTypeElementCodenames =
   | "subheadline"
   | "hero_image"
   | "body_copy"
-  | "featured_content";
+  | "featured_content"
+  | "url_slug";
 
 /*
  * Type guard for Landing Page

@@ -40,4 +40,4 @@ export * from "./types/landing-page.generated.ts";
 export * from "./types/presentation.generated.ts";
 export * from "./types/speaker.generated.ts";
 export * from "./types/venue.generated.ts";
-export * from "./workflows/default-workflow.generated.ts";
+export * from "./workflows/marketing-content-workflow.generated.ts";

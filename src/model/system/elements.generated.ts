@@ -52,6 +52,7 @@ export const elementCodenames = [
   "hero_image",
   "body_copy",
   "featured_content",
+  "url_slug",
 ] as const;
 
 /*

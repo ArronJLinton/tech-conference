@@ -4,22 +4,32 @@ import {
   createItemDataAttribute,
   createLanguageDataAttribute,
 } from "@kontent-ai/smart-link";
-import { useSuspenseQuery } from "@tanstack/react-query";
+import { useSuspenseQueries } from "@tanstack/react-query";
 import type { FC } from "react";
 import { useEffect } from "react";
 import Layout from "../components/Layout.tsx";
 import BodyCopy from "../components/landing/BodyCopy.tsx";
 import Hero from "../components/landing/Hero.tsx";
+import SponsorsSection from "../components/landing/SponsorsSection.tsx";
 import SmartLink from "../components/SmartLink.tsx";
 import { useAppContext } from "../context/AppContext.tsx";
 import "../index.css";
 import { fetchConferenceLandingPage } from "../utils/landingPage.ts";
+import { fetchSponsors } from "../utils/sponsors.ts";
 
 const LandingPage: FC = () => {
   const { environmentId, apiKey } = useAppContext();
-  const { data: landingPage } = useSuspenseQuery({
-    queryKey: ["landing-page", environmentId, "conference_agenda"],
-    queryFn: () => fetchConferenceLandingPage(environmentId, apiKey),
+  const [{ data: landingPage }, { data: sponsors }] = useSuspenseQueries({
+    queries: [
+      {
+        queryKey: ["landing-page", environmentId, "conference_agenda"],
+        queryFn: () => fetchConferenceLandingPage(environmentId, apiKey),
+      },
+      {
+        queryKey: ["sponsors", environmentId, "sponsorship"],
+        queryFn: () => fetchSponsors(environmentId, apiKey),
+      },
+    ],
   });
 
   useEffect(() => {
@@ -57,6 +67,7 @@ const LandingPage: FC = () => {
             imageAlt={heroImage?.description ?? heroImage?.name}
           />
           <BodyCopy body={landingPage.elements.body_copy} />
+          <SponsorsSection sponsors={sponsors} />
         </div>
       </Layout>
     </SmartLink>

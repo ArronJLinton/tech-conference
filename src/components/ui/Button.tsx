@@ -29,11 +29,18 @@ type TextLinkProps = {
   href: string;
   children: ReactNode;
   className?: string;
+  external?: boolean;
 };
 
-export const TextLink: FC<TextLinkProps> = ({ href, children, className = "" }) => (
+export const TextLink: FC<TextLinkProps> = ({
+  href,
+  children,
+  className = "",
+  external = false,
+}) => (
   <a
     href={href}
+    {...(external ? { target: "_blank", rel: "noreferrer" } : {})}
     className={`inline-flex items-center gap-2 text-[11px] font-semibold tracking-[0.16em] text-cyan uppercase transition-colors hover:text-paper ${focusRing} ${className}`}
   >
     {children}
