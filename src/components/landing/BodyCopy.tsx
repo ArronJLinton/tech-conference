@@ -3,6 +3,7 @@ import {
   PortableText,
   type PortableTextReactResolvers,
 } from "@kontent-ai/rich-text-resolver-react";
+import { createElementCodenameDataAttribute } from "@kontent-ai/smart-link";
 import type { FC } from "react";
 import type { LandingPageType } from "../../model/index.ts";
 import Section from "../ui/Section.tsx";
@@ -37,7 +38,10 @@ const BodyCopy: FC<BodyCopyProps> = ({ body }) => {
 
   return (
     <Section className="border-t border-line/80 py-16 md:py-24">
-      <div className="flex max-w-3xl flex-col gap-4">
+      <div
+        className="flex max-w-3xl flex-col gap-4"
+        {...createElementCodenameDataAttribute("body_copy")}
+      >
         <PortableText value={transformToPortableText(body.value)} components={resolvers} />
       </div>
     </Section>
