@@ -8,21 +8,27 @@ import { useSuspenseQueries } from "@tanstack/react-query";
 import type { FC } from "react";
 import { useEffect } from "react";
 import BodyCopy from "../components/landing/BodyCopy.tsx";
+import EventsSection from "../components/landing/EventsSection.tsx";
 import Hero from "../components/landing/Hero.tsx";
 import SponsorsSection from "../components/landing/SponsorsSection.tsx";
 import SmartLink from "../components/SmartLink.tsx";
 import { useAppContext } from "../context/AppContext.tsx";
 import "../index.css";
+import { fetchEvents } from "../utils/events.ts";
 import { fetchConferenceLandingPage } from "../utils/landingPage.ts";
 import { fetchSponsors } from "../utils/sponsors.ts";
 
 const LandingPage: FC = () => {
   const { environmentId, apiKey } = useAppContext();
-  const [{ data: landingPage }, { data: sponsors }] = useSuspenseQueries({
+  const [{ data: landingPage }, { data: events }, { data: sponsors }] = useSuspenseQueries({
     queries: [
       {
         queryKey: ["landing-page", environmentId, "conference_agenda"],
         queryFn: () => fetchConferenceLandingPage(environmentId, apiKey),
+      },
+      {
+        queryKey: ["events", environmentId, "conference_agenda"],
+        queryFn: () => fetchEvents(environmentId, apiKey),
       },
       {
         queryKey: ["sponsors", environmentId, "sponsorship"],
@@ -63,6 +69,7 @@ const LandingPage: FC = () => {
           imageAlt={heroImage?.description ?? heroImage?.name}
         />
         <BodyCopy body={landingPage.elements.body_copy} />
+        <EventsSection events={events} />
         <SponsorsSection sponsors={sponsors} />
       </div>
     </SmartLink>
