@@ -27,3 +27,5 @@ dist-ssr
 
 tsconfig.*.tsbuildinfo
 .vercel
+.cursor/
+.clear
