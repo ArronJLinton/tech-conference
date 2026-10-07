@@ -6,6 +6,8 @@ export const createClient = (environmentId: string, previewApiKey: string) =>
     environmentId,
     previewApiKey: previewApiKey,
     defaultQueryConfig: {
+      // TODO: Reference params from the URL to dynamically set the preview mode
+      // usePreviewMode: params.preview === "true" ? true : false,
       usePreviewMode: true,
     },
     proxy: {
