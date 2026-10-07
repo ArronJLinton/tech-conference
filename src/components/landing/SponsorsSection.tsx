@@ -16,6 +16,7 @@ import SectionHeading from "../ui/SectionHeading.tsx";
 
 type SponsorsSectionProps = {
   sponsors: CompanyType[];
+  showHeading?: boolean;
 };
 
 const bioResolvers: PortableTextReactResolvers = {
@@ -35,7 +36,7 @@ const bioResolvers: PortableTextReactResolvers = {
   },
 };
 
-const SponsorsSection: FC<SponsorsSectionProps> = ({ sponsors }) => {
+const SponsorsSection: FC<SponsorsSectionProps> = ({ sponsors, showHeading = true }) => {
   if (sponsors.length === 0) {
     return null;
   }
@@ -43,10 +44,10 @@ const SponsorsSection: FC<SponsorsSectionProps> = ({ sponsors }) => {
   return (
     <Section
       id="sponsors"
-      labelledBy="sponsors-heading"
+      labelledBy={showHeading ? "sponsors-heading" : undefined}
       className="border-t border-line/80 py-16 md:py-24"
     >
-      <SectionHeading id="sponsors-heading" title="Sponsors" />
+      {showHeading ? <SectionHeading id="sponsors-heading" title="Sponsors" /> : null}
       <ul className="grid gap-4 md:grid-cols-3">
         {sponsors.map((sponsor) => {
           const image = sponsor.elements.images.value[0];

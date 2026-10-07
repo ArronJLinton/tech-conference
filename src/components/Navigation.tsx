@@ -1,8 +1,13 @@
 import type { FC } from "react";
-import type { LinkItem } from "../content/landing.ts";
+import { NavLink } from "react-router";
+
+export type NavLinkItem = {
+  label: string;
+  href: string;
+};
 
 type NavigationProps = {
-  links: readonly LinkItem[];
+  links: readonly NavLinkItem[];
   label: string;
   title?: string;
   orientation?: "horizontal" | "vertical";
@@ -24,8 +29,8 @@ const Navigation: FC<NavigationProps> = ({
       : "flex flex-col gap-3";
   const linkClass =
     orientation === "horizontal"
-      ? "text-[11px] font-semibold tracking-[0.16em] text-mist uppercase transition-colors hover:text-cyan"
-      : "text-sm text-mist transition-colors hover:text-paper";
+      ? "text-[11px] font-semibold tracking-[0.16em] uppercase transition-colors hover:text-cyan"
+      : "text-sm transition-colors hover:text-paper";
 
   return (
     <nav className={className} aria-label={label}>
@@ -37,9 +42,22 @@ const Navigation: FC<NavigationProps> = ({
       <ul className={`${listClass} list-none`}>
         {links.map((link) => (
           <li key={link.label}>
-            <a href={link.href} className={linkClass} onClick={onNavigate}>
-              {link.label}
-            </a>
+            {link.href.startsWith("/") ? (
+              <NavLink
+                to={link.href}
+                end={link.href === "/"}
+                className={({ isActive }) =>
+                  `${linkClass} ${isActive ? "text-paper" : "text-mist"}`
+                }
+                onClick={onNavigate}
+              >
+                {link.label}
+              </NavLink>
+            ) : (
+              <a href={link.href} className={`${linkClass} text-mist`} onClick={onNavigate}>
+                {link.label}
+              </a>
+            )}
           </li>
         ))}
       </ul>

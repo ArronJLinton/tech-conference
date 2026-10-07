@@ -5,11 +5,11 @@ import {
 } from "@kontent-ai/rich-text-resolver-react";
 import { createElementCodenameDataAttribute } from "@kontent-ai/smart-link";
 import type { FC } from "react";
-import type { LandingPageType } from "../../model/index.ts";
 import Section from "../ui/Section.tsx";
 
 type BodyCopyProps = {
-  body: LandingPageType["elements"]["body_copy"];
+  body: { readonly value: string };
+  className?: string;
 };
 
 const resolvers: PortableTextReactResolvers = {
@@ -31,13 +31,16 @@ const resolvers: PortableTextReactResolvers = {
   },
 };
 
-const BodyCopy: FC<BodyCopyProps> = ({ body }) => {
+const BodyCopy: FC<BodyCopyProps> = ({
+  body,
+  className = "border-t border-line/80 py-16 md:py-24",
+}) => {
   if (!body.value) {
     return null;
   }
 
   return (
-    <Section className="border-t border-line/80 py-16 md:py-24">
+    <Section className={className}>
       <div
         className="flex max-w-3xl flex-col gap-4"
         {...createElementCodenameDataAttribute("body_copy")}

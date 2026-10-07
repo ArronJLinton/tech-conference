@@ -1,7 +1,8 @@
 import type { FC } from "react";
+import { Link } from "react-router";
 
 const Logo: FC = () => (
-  <a href="#top" className="flex shrink-0 items-center gap-2.5" aria-label="Converge home">
+  <Link to="/" className="flex shrink-0 items-center gap-2.5" aria-label="Converge home">
     <svg width="28" height="28" viewBox="0 0 32 32" aria-hidden="true">
       <rect width="32" height="32" rx="8" className="fill-cyan" />
       <path d="M16 7v18M7 16h18" stroke="#071016" strokeWidth="1.7" />
@@ -14,7 +15,7 @@ const Logo: FC = () => (
     <span className="font-family-display text-[13px] font-semibold tracking-[0.26em] text-paper">
       CONVERGE
     </span>
-  </a>
+  </Link>
 );
 
 export default Logo;

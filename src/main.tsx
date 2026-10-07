@@ -4,9 +4,12 @@ import { createRoot } from "react-dom/client";
 import { ErrorBoundary } from "react-error-boundary";
 import { createBrowserRouter } from "react-router";
 import { RouterProvider } from "react-router/dom";
+import AppShell from "./components/AppShell.tsx";
 import Auth0ProviderWithRedirect from "./components/auth/AuthProviderWithRedirect.tsx";
+import Layout from "./components/Layout.tsx";
 import Loader from "./components/Loader.tsx";
 import { AppContextComponent } from "./context/AppContext.tsx";
+import ContentPage from "./pages/ContentPage.tsx";
 import LandingPage from "./pages/LandingPage.tsx";
 
 const queryClient = new QueryClient();
@@ -33,19 +36,15 @@ const router = createBrowserRouter([
     path: "/",
     element: (
       <QueryClientProvider client={queryClient}>
-        <Suspense
-          fallback={
-            <div className="flex h-screen w-screen items-center justify-center">
-              <Loader />
-            </div>
-          }
-        >
-          <AppContextComponent>
-            <LandingPage />
-          </AppContextComponent>
-        </Suspense>
+        <AppContextComponent>
+          <AppShell />
+        </AppContextComponent>
       </QueryClientProvider>
     ),
+    children: [
+      { index: true, element: <LandingPage /> },
+      { path: ":pageCodename", element: <ContentPage /> },
+    ],
   },
   ...(domain && clientId && redirectUri
     ? [
@@ -66,17 +65,19 @@ const router = createBrowserRouter([
                     </div>
                   )}
                 >
-                  <Suspense
-                    fallback={
-                      <div className="flex w-screen h-screen justify-center">
-                        <Loader />
-                      </div>
-                    }
-                  >
-                    <AppContextComponent>
-                      <LandingPage />
-                    </AppContextComponent>
-                  </Suspense>
+                  <AppContextComponent>
+                    <Layout>
+                      <Suspense
+                        fallback={
+                          <div className="flex w-screen h-screen justify-center">
+                            <Loader />
+                          </div>
+                        }
+                      >
+                        <LandingPage />
+                      </Suspense>
+                    </Layout>
+                  </AppContextComponent>
                 </ErrorBoundary>
               </QueryClientProvider>
             </Auth0ProviderWithRedirect>

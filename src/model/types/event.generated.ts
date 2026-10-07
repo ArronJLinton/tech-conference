@@ -18,7 +18,6 @@ import type { Elements, IContentItem } from '@kontent-ai/delivery-sdk';
 import type { AgendaSessionSlotType } from '../types/agenda-session-slot.generated.ts';
 import type { CollectionCodenames } from '../system/collections.generated.ts';
 import type { CompanyType } from '../types/company.generated.ts';
-import type { CoreType } from '../system/types.generated.ts';
 import type { LanguageCodenames } from '../system/languages.generated.ts';
 import type { MetadataSnippet } from '../snippets/seo-social.generated.ts';
 import type { VenueType } from '../types/venue.generated.ts';

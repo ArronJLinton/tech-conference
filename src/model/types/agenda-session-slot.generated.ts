@@ -16,7 +16,6 @@
             import type { TypeCodenames } from '../system/types.generated.ts';
 import type { Elements, IContentItem } from '@kontent-ai/delivery-sdk';
 import type { CollectionCodenames } from '../system/collections.generated.ts';
-import type { CoreType } from '../system/types.generated.ts';
 import type { LanguageCodenames } from '../system/languages.generated.ts';
 import type { PresentationType } from '../types/presentation.generated.ts';
 import type { RegionTaxonomyTermCodenames, RegionTaxonomyCodename } from '../taxonomies/region.generated.ts';
