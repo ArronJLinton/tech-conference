@@ -15,7 +15,7 @@
 /*
  * Array of all workflow codenames
  */
-export const workflowCodenames = ["default"] as const;
+export const workflowCodenames = ["default", "presentation_content"] as const;
 
 /*
  * Type representing all workflow codenames
@@ -39,6 +39,7 @@ export const workflowStepCodenames = [
   "published",
   "archived",
   "scheduled",
+  "draft_39cecae",
 ] as const;
 
 /*

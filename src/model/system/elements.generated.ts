@@ -23,12 +23,12 @@ export const elementCodenames = [
   "summary",
   "topic",
   "slides_downloads",
+  "website",
   "name",
   "biography",
   "company",
   "photo",
   "linkedin",
-  "website",
   "email",
   "location",
   "directions",
@@ -41,6 +41,7 @@ export const elementCodenames = [
   "room",
   "presentation",
   "assigned_speakers",
+  "region",
   "start_and_end_date_time",
   "end_date_time",
   "venue",
@@ -53,6 +54,7 @@ export const elementCodenames = [
   "body_copy",
   "featured_content",
   "url_slug",
+  "untitled_subpages",
 ] as const;
 
 /*

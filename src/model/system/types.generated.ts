@@ -17,6 +17,7 @@ import type { CompanyType } from "../types/company.generated.ts";
 import type { ConferenceType } from "../types/conference.generated.ts";
 import type { EventType } from "../types/event.generated.ts";
 import type { LandingPageType } from "../types/landing-page.generated.ts";
+import type { PageType } from "../types/page.generated.ts";
 import type { PresentationType } from "../types/presentation.generated.ts";
 import type { SpeakerType } from "../types/speaker.generated.ts";
 import type { VenueType } from "../types/venue.generated.ts";
@@ -33,6 +34,7 @@ export const typeCodenames = [
   "event",
   "conference",
   "landing_page",
+  "page",
 ] as const;
 
 /*
@@ -58,7 +60,8 @@ export type CoreType =
   | AgendaSessionSlotType
   | EventType
   | ConferenceType
-  | LandingPageType;
+  | LandingPageType
+  | PageType;
 
 /*
  * Type mapping for codename & type. Can be used for type safe access to type based on the codename of type.
@@ -72,6 +75,7 @@ export type CodenameTypeMapping = {
   readonly event: EventType;
   readonly conference: ConferenceType;
   readonly landing_page: LandingPageType;
+  readonly page: PageType;
 };
 
 /*

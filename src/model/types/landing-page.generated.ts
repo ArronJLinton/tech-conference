@@ -102,6 +102,16 @@ export type LandingPageType = IContentItem<
      * Required: true
      */
     readonly url_slug: Elements.UrlSlugElement;
+
+    /*
+     * Untitled subpages
+     *
+     * Codename: untitled_subpages
+     * Id: 7e4958ab-d4b6-4218-8615-65e2f9007dbf
+     * Type: subpages
+     * Required: false
+     */
+    readonly untitled_subpages: Elements.LinkedItemsElement<CoreType>;
   },
   LandingPageTypeCodename,
   LanguageCodenames,
@@ -119,7 +129,8 @@ export type LandingPageTypeElementCodenames =
   | "hero_image"
   | "body_copy"
   | "featured_content"
-  | "url_slug";
+  | "url_slug"
+  | "untitled_subpages";
 
 /*
  * Type guard for Landing Page

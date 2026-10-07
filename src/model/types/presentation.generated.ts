@@ -79,6 +79,16 @@ export type PresentationType = IContentItem<
      * Required: false
      */
     readonly slides_downloads: Elements.AssetsElement;
+
+    /*
+     * Website
+     *
+     * Codename: website
+     * Id: 0c10afbd-8f63-4579-8e81-707087caecbe
+     * Type: text
+     * Required: false
+     */
+    readonly website: Elements.TextElement;
   },
   PresentationTypeCodename,
   LanguageCodenames,
@@ -90,7 +100,7 @@ export type PresentationType = IContentItem<
 /*
  * Type representing all available element codenames for Presentation
  */
-export type PresentationTypeElementCodenames = "title" | "summary" | "topic" | "slides_downloads";
+export type PresentationTypeElementCodenames = "title" | "summary" | "topic" | "slides_downloads" | "website";
 
 /*
  * Type guard for Presentation

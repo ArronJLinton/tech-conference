@@ -16,8 +16,10 @@
             import type { TypeCodenames } from '../system/types.generated.ts';
 import type { Elements, IContentItem } from '@kontent-ai/delivery-sdk';
 import type { CollectionCodenames } from '../system/collections.generated.ts';
+import type { CoreType } from '../system/types.generated.ts';
 import type { LanguageCodenames } from '../system/languages.generated.ts';
 import type { PresentationType } from '../types/presentation.generated.ts';
+import type { RegionTaxonomyTermCodenames, RegionTaxonomyCodename } from '../taxonomies/region.generated.ts';
 import type { SpeakerType } from '../types/speaker.generated.ts';
 import type { WorkflowCodenames, WorkflowStepCodenames } from '../system/workflows.generated.ts';
            
@@ -91,13 +93,24 @@ export type AgendaSessionSlotType = IContentItem<
 * Required: false
 * Allowed content types: speaker
     */
-                readonly assigned_speakers: Elements.LinkedItemsElement<SpeakerType>;}, 
+                readonly assigned_speakers: Elements.LinkedItemsElement<SpeakerType>;
+
+/*
+    * Region
+    *
+    * Codename: region
+* Id: 8a4383e4-556f-421b-b57a-b73629b804b6
+* Type: taxonomy
+* Required: true
+* Taxonomy: region
+    */
+                readonly region: Elements.TaxonomyElement<RegionTaxonomyTermCodenames, RegionTaxonomyCodename>;}, 
 AgendaSessionSlotTypeCodename, LanguageCodenames, CollectionCodenames, WorkflowCodenames, WorkflowStepCodenames>
 
 /*
 * Type representing all available element codenames for Agenda Session Slot
 */
-export type AgendaSessionSlotTypeElementCodenames = 'start_time' | 'end_time' | 'room' | 'presentation' | 'assigned_speakers';;
+export type AgendaSessionSlotTypeElementCodenames = 'start_time' | 'end_time' | 'room' | 'presentation' | 'assigned_speakers' | 'region';;
 
 /*
     * Type guard for Agenda Session Slot

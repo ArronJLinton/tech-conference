@@ -34,6 +34,7 @@ export const topicsTaxonomyTermCodenames = [
   "ai_agents",
   "ai_governance",
   "ai_engineering_with_claude_code",
+  "agentic_cms",
 ] as const;
 
 /*
