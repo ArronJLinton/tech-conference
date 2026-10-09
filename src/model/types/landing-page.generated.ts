@@ -20,6 +20,7 @@ import type { WorkflowCodenames, WorkflowStepCodenames } from "../system/workflo
 import type { CompanyType } from "../types/company.generated.ts";
 import type { ConferenceType } from "../types/conference.generated.ts";
 import type { EventType } from "../types/event.generated.ts";
+import type { PresentationType } from "../types/presentation.generated.ts";
 import type { VenueType } from "../types/venue.generated.ts";
 
 /*
@@ -89,9 +90,11 @@ export type LandingPageType = IContentItem<
      * Id: a0323f40-29be-4801-9fcf-6725d7a6a254
      * Type: modular_content
      * Required: false
-     * Allowed content types: venue, event, conference, company
+     * Allowed content types: venue, event, conference, company, presentation
      */
-    readonly featured_content: Elements.LinkedItemsElement<VenueType | EventType | ConferenceType | CompanyType>;
+    readonly featured_content: Elements.LinkedItemsElement<
+      VenueType | EventType | ConferenceType | CompanyType | PresentationType
+    >;
 
     /*
      * Featured Content

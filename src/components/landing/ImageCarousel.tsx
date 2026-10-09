@@ -8,9 +8,12 @@ import Icon from "../ui/Icon.tsx";
 
 export type CarouselImage = {
   key: string;
-  url: string;
+  url?: string;
   alt: string;
+  title?: string;
+  summary?: string;
   itemId?: string;
+  elementCodename?: string;
 };
 
 type ImageCarouselProps = {
@@ -85,13 +88,28 @@ const ImageCarousel: FC<ImageCarouselProps> = ({
               key={image.key}
               className="flex aspect-[16/9] items-center justify-center rounded-2xl border border-line bg-panel p-6 md:p-10"
               {...(image.itemId ? createItemDataAttribute(image.itemId) : {})}
-              {...(image.itemId ? createElementCodenameDataAttribute("images") : {})}
+              {...(image.itemId
+                ? createElementCodenameDataAttribute(image.elementCodename ?? "images")
+                : {})}
             >
-              <img
-                src={`${image.url}?auto=format&w=1200`}
-                alt={image.alt}
-                className="max-h-full max-w-full object-contain"
-              />
+              {image.url ? (
+                <img
+                  src={`${image.url}?auto=format&w=1200`}
+                  alt={image.alt}
+                  className="max-h-full max-w-full object-contain"
+                />
+              ) : (
+                <div className="flex max-w-xl flex-col gap-3 text-center">
+                  {image.title ? (
+                    <h3 className="font-family-display text-2xl font-semibold text-paper">
+                      {image.title}
+                    </h3>
+                  ) : null}
+                  {image.summary ? (
+                    <p className="text-sm leading-relaxed text-mist">{image.summary}</p>
+                  ) : null}
+                </div>
+              )}
             </div>
           ))}
         </div>
@@ -117,7 +135,7 @@ const ImageCarousel: FC<ImageCarouselProps> = ({
         ) : null}
       </div>
       <p className="sr-only">
-        {visible.map((image) => image.alt).join(", ")}, {shown} of {count}
+        {visible.map((image) => image.alt || image.title).join(", ")}, {shown} of {count}
       </p>
       {count > shown ? (
         <div className="mt-4 flex justify-center gap-2">
