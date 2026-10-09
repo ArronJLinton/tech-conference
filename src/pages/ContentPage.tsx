@@ -88,7 +88,7 @@ const ContentPage: FC = () => {
           className="border-t border-line/80 py-10 md:py-12"
         />
         <AgendaSessions sessions={sessions} />
-        <SponsorsSection sponsors={sponsors} showHeading={false} />
+        <SponsorsSection sponsors={sponsors} showHeading={false} layout="directory" />
       </div>
     </SmartLink>
   );
