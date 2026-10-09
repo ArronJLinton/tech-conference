@@ -1,5 +1,6 @@
 import {
   createDisableFeaturesDataAttribute,
+  createElementCodenameDataAttribute,
   createEnvironmentDataAttribute,
   createItemDataAttribute,
   createLanguageDataAttribute,
@@ -8,11 +9,11 @@ import type { IContentItem } from "@kontent-ai/delivery-sdk";
 import { useSuspenseQueries } from "@tanstack/react-query";
 import type { FC } from "react";
 import { useEffect } from "react";
-import BodyCopy from "../components/landing/BodyCopy.tsx";
 import EventsSection from "../components/landing/EventsSection.tsx";
 import FeaturedContent from "../components/landing/FeaturedContent.tsx";
 import Hero from "../components/landing/Hero.tsx";
 import SmartLink from "../components/SmartLink.tsx";
+import Section from "../components/ui/Section.tsx";
 import { useAppContext } from "../context/AppContext.tsx";
 import "../index.css";
 import { isPageType, type PageType } from "../model/index.ts";
@@ -87,19 +88,30 @@ const LandingPage: FC = () => {
           imageUrl={heroImage?.url}
           imageAlt={heroImage?.description ?? heroImage?.name}
         />
-        <BodyCopy body={landingPage.elements.body_copy} />
+        {landingPage.elements.summary?.value ? (
+          <Section className="border-t border-line/80 py-16 md:py-24">
+            <p
+              className="max-w-3xl text-base leading-relaxed text-mist"
+              {...createElementCodenameDataAttribute("summary")}
+            >
+              {landingPage.elements.summary.value}
+            </p>
+          </Section>
+        ) : null}
         <EventsSection
           events={events}
           eventsPagePath={`/${eventsPage?.system.codename ?? "events_page"}`}
         />
         <FeaturedContent
           items={featuredItems(
-            landingPage.elements.featured_content.linkedItems,
-            landingPage.elements.featured_content_a57b567.linkedItems,
+            landingPage.elements.featured_content?.linkedItems ?? [],
+            landingPage.elements.featured_content_a57b567?.linkedItems ?? [],
           )}
           autoplay={
-            landingPage.elements.carousel.value.length === 0 ||
-            landingPage.elements.carousel.value.some((option) => option.codename === "automatic")
+            (landingPage.elements.carousel?.value.length ?? 0) === 0 ||
+            (landingPage.elements.carousel?.value ?? []).some(
+              (option) => option.codename === "automatic",
+            )
           }
         />
       </div>

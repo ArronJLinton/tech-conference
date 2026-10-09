@@ -74,14 +74,14 @@ export type LandingPageType = IContentItem<
     readonly hero_image: Elements.AssetsElement;
 
     /*
-     * Body Copy
+     * Summary
      *
-     * Codename: body_copy
-     * Id: 3c41ef3f-bbb8-42e4-b637-d2bb39128202
-     * Type: rich_text
-     * Required: false
+     * Codename: summary
+     * Id: a858fe98-dff4-4e9c-ab17-31434e69282b
+     * Type: text
+     * Required: true
      */
-    readonly body_copy: Elements.RichTextElement<CoreType>;
+    readonly summary: Elements.TextElement;
 
     /*
      * Featured Content
@@ -119,16 +119,6 @@ export type LandingPageType = IContentItem<
     readonly carousel: Elements.MultipleChoiceElement;
 
     /*
-     * URL Slug
-     *
-     * Codename: url_slug
-     * Id: 7a67821c-a330-44fe-a92e-519d0f74aa21
-     * Type: url_slug
-     * Required: true
-     */
-    readonly url_slug: Elements.UrlSlugElement;
-
-    /*
      * Untitled subpages
      *
      * Codename: untitled_subpages
@@ -152,11 +142,10 @@ export type LandingPageTypeElementCodenames =
   | "headline"
   | "subheadline"
   | "hero_image"
-  | "body_copy"
+  | "summary"
   | "featured_content"
   | "featured_content_a57b567"
   | "carousel"
-  | "url_slug"
   | "untitled_subpages";
 
 /*

@@ -8,7 +8,7 @@ import type { FC } from "react";
 import Section from "../ui/Section.tsx";
 
 type BodyCopyProps = {
-  body: { readonly value: string };
+  body?: { readonly value: string };
   className?: string;
 };
 
@@ -35,7 +35,7 @@ const BodyCopy: FC<BodyCopyProps> = ({
   body,
   className = "border-t border-line/80 py-16 md:py-24",
 }) => {
-  if (!body.value) {
+  if (!body?.value) {
     return null;
   }
 

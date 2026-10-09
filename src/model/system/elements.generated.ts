@@ -55,7 +55,6 @@ export const elementCodenames = [
   "featured_content",
   "featured_content_a57b567",
   "carousel",
-  "url_slug",
   "untitled_subpages",
 ] as const;
 
