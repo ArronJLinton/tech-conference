@@ -11,7 +11,7 @@ export const fetchPage = async (
     .type("page")
     .equalsFilter("system.codename", codename)
     .limitParameter(1)
-    .depthParameter(3)
+    .depthParameter(4)
     .toPromise();
 
   return response.data.items[0] ?? null;

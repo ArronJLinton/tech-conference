@@ -3,14 +3,15 @@ import {
   createItemDataAttribute,
 } from "@kontent-ai/smart-link";
 import type { FC } from "react";
+import { Link } from "react-router";
 import { type EventType, isVenueType } from "../../model/index.ts";
-import { TextLink } from "../ui/Button.tsx";
 import { cardClassName } from "../ui/Card.tsx";
 import Section from "../ui/Section.tsx";
 import SectionHeading from "../ui/SectionHeading.tsx";
 
 type EventsSectionProps = {
   events: EventType[];
+  eventsPagePath: string;
 };
 
 const formatTimestamp = (value: string | null, timeZone: string | null) => {
@@ -40,7 +41,7 @@ const formatTimestamp = (value: string | null, timeZone: string | null) => {
   }
 };
 
-const EventsSection: FC<EventsSectionProps> = ({ events }) => {
+const EventsSection: FC<EventsSectionProps> = ({ events, eventsPagePath }) => {
   if (events.length === 0) {
     return null;
   }
@@ -73,52 +74,50 @@ const EventsSection: FC<EventsSectionProps> = ({ events }) => {
           const venues = event.elements.venue.linkedItems.filter(isVenueType);
 
           return (
-            <li
-              key={event.system.id}
-              className={`${cardClassName} flex h-full flex-col overflow-hidden`}
-              {...createItemDataAttribute(event.system.id)}
-            >
-              {image ? (
-                <div {...createElementCodenameDataAttribute("images")}>
-                  <img
-                    src={`${image.url}?auto=format&w=1200`}
-                    alt={image.description ?? image.name ?? title}
-                    className="aspect-[16/9] w-full object-cover"
-                  />
-                </div>
-              ) : null}
-              <div className="flex flex-1 flex-col p-6">
-                <h3
-                  className="font-family-display text-xl font-semibold text-paper"
-                  {...createElementCodenameDataAttribute("title")}
-                >
-                  {title}
-                </h3>
-                {start ? (
-                  <p
-                    className="mt-3 text-sm text-paper"
-                    {...createElementCodenameDataAttribute("start_and_end_date_time")}
-                  >
-                    {start}
-                  </p>
+            <li key={event.system.id}>
+              <Link
+                to={`${eventsPagePath}?event=${event.system.codename}`}
+                className={`${cardClassName} flex h-full flex-col overflow-hidden`}
+                {...createItemDataAttribute(event.system.id)}
+              >
+                {image ? (
+                  <div {...createElementCodenameDataAttribute("images")}>
+                    <img
+                      src={`${image.url}?auto=format&w=1200`}
+                      alt={image.description ?? image.name ?? title}
+                      className="aspect-[16/9] w-full object-cover"
+                    />
+                  </div>
                 ) : null}
-                {end ? (
-                  <p
-                    className="mt-1 text-sm text-mist"
-                    {...createElementCodenameDataAttribute("end_date_time")}
+                <div className="flex flex-1 flex-col p-6">
+                  <h3
+                    className="font-family-display text-xl font-semibold text-paper"
+                    {...createElementCodenameDataAttribute("title")}
                   >
-                    {end}
-                  </p>
-                ) : null}
-                {venues.length > 0 ? (
-                  <ul
-                    className="mt-5 flex flex-col gap-4"
-                    {...createElementCodenameDataAttribute("venue")}
-                  >
-                    {venues.map((venue) => {
-                      const website = venue.elements.website.value;
-
-                      return (
+                    {title}
+                  </h3>
+                  {start ? (
+                    <p
+                      className="mt-3 text-sm text-paper"
+                      {...createElementCodenameDataAttribute("start_and_end_date_time")}
+                    >
+                      {start}
+                    </p>
+                  ) : null}
+                  {end ? (
+                    <p
+                      className="mt-1 text-sm text-mist"
+                      {...createElementCodenameDataAttribute("end_date_time")}
+                    >
+                      {end}
+                    </p>
+                  ) : null}
+                  {venues.length > 0 ? (
+                    <ul
+                      className="mt-5 flex flex-col gap-4"
+                      {...createElementCodenameDataAttribute("venue")}
+                    >
+                      {venues.map((venue) => (
                         <li key={venue.system.id} {...createItemDataAttribute(venue.system.id)}>
                           <p
                             className="text-sm text-paper"
@@ -134,22 +133,12 @@ const EventsSection: FC<EventsSectionProps> = ({ events }) => {
                               {venue.elements.location.value}
                             </p>
                           ) : null}
-                          {website ? (
-                            <div
-                              className="mt-4"
-                              {...createElementCodenameDataAttribute("website")}
-                            >
-                              <TextLink href={website} external={true}>
-                                Visit {venue.elements.name.value}
-                              </TextLink>
-                            </div>
-                          ) : null}
                         </li>
-                      );
-                    })}
-                  </ul>
-                ) : null}
-              </div>
+                      ))}
+                    </ul>
+                  ) : null}
+                </div>
+              </Link>
             </li>
           );
         })}

@@ -10,12 +10,13 @@ import type { FC } from "react";
 import { useEffect } from "react";
 import { useParams } from "react-router";
 import AgendaSessions from "../components/agenda/AgendaSessions.tsx";
+import EventsHub from "../components/events/EventsHub.tsx";
 import BodyCopy from "../components/landing/BodyCopy.tsx";
 import SponsorsSection from "../components/landing/SponsorsSection.tsx";
 import SmartLink from "../components/SmartLink.tsx";
 import Section from "../components/ui/Section.tsx";
 import { useAppContext } from "../context/AppContext.tsx";
-import { isAgendaSessionSlotType, isCompanyType } from "../model/index.ts";
+import { isAgendaSessionSlotType, isCompanyType, isEventType } from "../model/index.ts";
 import { fetchPage } from "../utils/pages.ts";
 
 const ContentPage: FC = () => {
@@ -39,8 +40,24 @@ const ContentPage: FC = () => {
     );
   }
 
+  const events = page.elements.featured_content.linkedItems.filter(isEventType);
   const sessions = page.elements.featured_content.linkedItems.filter(isAgendaSessionSlotType);
   const sponsors = page.elements.sponsors.linkedItems.filter(isCompanyType);
+
+  if (events.length > 0) {
+    return (
+      <SmartLink>
+        <div
+          {...createEnvironmentDataAttribute(environmentId)}
+          {...createLanguageDataAttribute(page.system.language)}
+          {...createItemDataAttribute(page.system.id)}
+          {...createDisableFeaturesDataAttribute()}
+        >
+          <EventsHub page={page} events={events} />
+        </div>
+      </SmartLink>
+    );
+  }
 
   return (
     <SmartLink>

@@ -16,9 +16,12 @@ import {
   type SpeakerType,
 } from "../../model/index.ts";
 import Section from "../ui/Section.tsx";
+import SectionHeading from "../ui/SectionHeading.tsx";
 
 type AgendaSessionsProps = {
   sessions: AgendaSessionSlotType[];
+  heading?: string;
+  locale?: string;
 };
 
 const summaryResolvers: PortableTextReactResolvers = {
@@ -38,7 +41,7 @@ const summaryResolvers: PortableTextReactResolvers = {
   },
 };
 
-const formatTimestamp = (value: string | null, timeZone: string | null) => {
+const formatTimestamp = (value: string | null, timeZone: string | null, locale = "en") => {
   if (!value) {
     return null;
   }
@@ -59,9 +62,9 @@ const formatTimestamp = (value: string | null, timeZone: string | null) => {
   };
 
   try {
-    return new Intl.DateTimeFormat("en", options).format(date);
+    return new Intl.DateTimeFormat(locale, options).format(date);
   } catch {
-    return new Intl.DateTimeFormat("en", { ...options, timeZone: "UTC" }).format(date);
+    return new Intl.DateTimeFormat(locale, { ...options, timeZone: "UTC" }).format(date);
   }
 };
 
@@ -92,7 +95,7 @@ const SpeakerLine: FC<{ speaker: SpeakerType }> = ({ speaker }) => {
   );
 };
 
-const AgendaSessions: FC<AgendaSessionsProps> = ({ sessions }) => {
+const AgendaSessions: FC<AgendaSessionsProps> = ({ sessions, heading, locale = "en" }) => {
   if (sessions.length === 0) {
     return null;
   }
@@ -102,19 +105,26 @@ const AgendaSessions: FC<AgendaSessionsProps> = ({ sessions }) => {
   );
 
   return (
-    <Section className="border-t border-line/80 py-12 md:py-16">
+    <Section
+      labelledBy={heading ? "presentations-heading" : undefined}
+      className="border-t border-line/80 py-12 md:py-16"
+    >
+      {heading ? <SectionHeading id="presentations-heading" title={heading} /> : null}
       <ol className="flex flex-col">
         {ordered.map((session) => {
           const start = formatTimestamp(
             session.elements.start_time.value,
             session.elements.start_time.displayTimeZone,
+            locale,
           );
           const end = formatTimestamp(
             session.elements.end_time.value,
             session.elements.end_time.displayTimeZone,
+            locale,
           );
           const regions = session.elements.region.value.map((term) => term.name).filter(Boolean);
-          const presentations = session.elements.presentation.linkedItems.filter(isPresentationType);
+          const presentations =
+            session.elements.presentation.linkedItems.filter(isPresentationType);
           const speakers = session.elements.assigned_speakers.linkedItems.filter(isSpeakerType);
 
           return (

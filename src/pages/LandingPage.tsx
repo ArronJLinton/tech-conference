@@ -14,6 +14,7 @@ import SponsorsSection from "../components/landing/SponsorsSection.tsx";
 import SmartLink from "../components/SmartLink.tsx";
 import { useAppContext } from "../context/AppContext.tsx";
 import "../index.css";
+import { isPageType, type PageType } from "../model/index.ts";
 import { fetchEvents } from "../utils/events.ts";
 import { fetchConferenceLandingPage } from "../utils/landingPage.ts";
 import { fetchSponsors } from "../utils/sponsors.ts";
@@ -53,6 +54,12 @@ const LandingPage: FC = () => {
   }
 
   const heroImage = landingPage.elements.hero_image.value[0];
+  const eventCodenames = new Set(events.map((event) => event.system.codename));
+  const eventsPage = landingPage.elements.untitled_subpages.linkedItems.find(
+    (item): item is PageType =>
+      isPageType(item) &&
+      item.elements.featured_content.value.some((codename) => eventCodenames.has(codename)),
+  );
 
   return (
     <SmartLink>
@@ -69,7 +76,10 @@ const LandingPage: FC = () => {
           imageAlt={heroImage?.description ?? heroImage?.name}
         />
         <BodyCopy body={landingPage.elements.body_copy} />
-        <EventsSection events={events} />
+        <EventsSection
+          events={events}
+          eventsPagePath={`/${eventsPage?.system.codename ?? "events_page"}`}
+        />
         <SponsorsSection sponsors={sponsors} />
       </div>
     </SmartLink>

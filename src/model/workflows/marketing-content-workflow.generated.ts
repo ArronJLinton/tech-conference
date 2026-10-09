@@ -35,6 +35,8 @@ export const marketingContentWorkflowStepCodenames = [
   "draft",
   "seo_geo_review",
   "marketing_review",
+  "legal_review",
+  "final_review",
   "published",
   "archived",
   "scheduled",
