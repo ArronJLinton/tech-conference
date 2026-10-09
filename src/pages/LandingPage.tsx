@@ -80,7 +80,13 @@ const LandingPage: FC = () => {
           events={events}
           eventsPagePath={`/${eventsPage?.system.codename ?? "events_page"}`}
         />
-        <SponsorsSection sponsors={sponsors} />
+        <SponsorsSection
+          sponsors={sponsors}
+          autoplay={
+            landingPage.elements.carousel.value.length === 0 ||
+            landingPage.elements.carousel.value.some((option) => option.codename === "automatic")
+          }
+        />
       </div>
     </SmartLink>
   );

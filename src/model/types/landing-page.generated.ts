@@ -94,6 +94,28 @@ export type LandingPageType = IContentItem<
     readonly featured_content: Elements.LinkedItemsElement<VenueType | EventType | ConferenceType | CompanyType>;
 
     /*
+     * Featured Content
+     *
+     * Codename: featured_content_a57b567
+     * Id: a57b5678-acfd-4276-8967-8b6de23f98f1
+     * Type: rich_text
+     * Required: false
+     * Guidelines: Carousel Element
+     */
+    readonly featured_content_a57b567: Elements.RichTextElement<CoreType>;
+
+    /*
+     * Carousel
+     *
+     * Codename: carousel
+     * Id: d3dedd80-b91d-513f-99df-fd3de3318eee
+     * Type: multiple_choice
+     * Required: false
+     * Options: automatic, manual
+     */
+    readonly carousel: Elements.MultipleChoiceElement;
+
+    /*
      * URL Slug
      *
      * Codename: url_slug
@@ -129,6 +151,8 @@ export type LandingPageTypeElementCodenames =
   | "hero_image"
   | "body_copy"
   | "featured_content"
+  | "featured_content_a57b567"
+  | "carousel"
   | "url_slug"
   | "untitled_subpages";
 

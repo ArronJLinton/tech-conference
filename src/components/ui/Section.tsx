@@ -5,11 +5,18 @@ type SectionProps = PropsWithChildren<{
   id?: string;
   className?: string;
   labelledBy?: string;
+  contained?: boolean;
 }>;
 
-const Section: FC<SectionProps> = ({ id, className = "", labelledBy, children }) => (
+const Section: FC<SectionProps> = ({
+  id,
+  className = "",
+  labelledBy,
+  contained = true,
+  children,
+}) => (
   <section id={id} aria-labelledby={labelledBy} className={`scroll-mt-20 ${className}`}>
-    <Container>{children}</Container>
+    {contained ? <Container>{children}</Container> : children}
   </section>
 );
 
