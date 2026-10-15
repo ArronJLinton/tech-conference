@@ -96,27 +96,10 @@ const EventsSection: FC<EventsSectionProps> = ({ events, eventsPagePath }) => {
                   >
                     {title}
                   </h3>
-                  {start ? (
-                    <p
-                      className="mt-3 text-sm text-paper"
-                      {...createElementCodenameDataAttribute("start_and_end_date_time")}
-                    >
-                      {start}
-                    </p>
-                  ) : null}
-                  {end ? (
-                    <p
-                      className="mt-1 text-sm text-mist"
-                      {...createElementCodenameDataAttribute("end_date_time")}
-                    >
-                      {end}
-                    </p>
-                  ) : null}
+                  {start ? <p className="mt-3 text-sm text-paper">{start}</p> : null}
+                  {end ? <p className="mt-1 text-sm text-mist">{end}</p> : null}
                   {venues.length > 0 ? (
-                    <ul
-                      className="mt-5 flex flex-col gap-4"
-                      {...createElementCodenameDataAttribute("venue")}
-                    >
+                    <ul className="mt-5 flex flex-col gap-4">
                       {venues.map((venue) => (
                         <li key={venue.system.id} {...createItemDataAttribute(venue.system.id)}>
                           <p
@@ -126,12 +109,7 @@ const EventsSection: FC<EventsSectionProps> = ({ events, eventsPagePath }) => {
                             {venue.elements.name.value}
                           </p>
                           {venue.elements.location.value ? (
-                            <p
-                              className="mt-1 text-sm text-mist"
-                              {...createElementCodenameDataAttribute("location")}
-                            >
-                              {venue.elements.location.value}
-                            </p>
+                            <p className="mt-1 text-sm text-mist">{venue.elements.location.value}</p>
                           ) : null}
                         </li>
                       ))}

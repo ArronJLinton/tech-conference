@@ -3,10 +3,7 @@ import {
   PortableText,
   type PortableTextReactResolvers,
 } from "@kontent-ai/rich-text-resolver-react";
-import {
-  createElementCodenameDataAttribute,
-  createItemDataAttribute,
-} from "@kontent-ai/smart-link";
+import { createItemDataAttribute } from "@kontent-ai/smart-link";
 import type { FC } from "react";
 import type { CompanyType } from "../../model/index.ts";
 import Container from "../Container.tsx";
@@ -72,10 +69,7 @@ const SponsorsSection: FC<SponsorsSectionProps> = ({
                 {...createItemDataAttribute(sponsor.system.id)}
               >
                 {image ? (
-                  <div
-                    className="mb-5 flex h-16 items-center"
-                    {...createElementCodenameDataAttribute("images")}
-                  >
+                  <div className="mb-5 flex h-16 items-center">
                     <img
                       src={`${image.url}?auto=format&w=480`}
                       alt={image.description ?? image.name ?? title}
@@ -83,22 +77,14 @@ const SponsorsSection: FC<SponsorsSectionProps> = ({
                     />
                   </div>
                 ) : null}
-                <h2
-                  className="font-family-display text-xl font-semibold text-paper"
-                  {...createElementCodenameDataAttribute("title")}
-                >
-                  {title}
-                </h2>
+                <h2 className="font-family-display text-xl font-semibold text-paper">{title}</h2>
                 {bio ? (
-                  <div
-                    className="mt-3 flex flex-col gap-3"
-                    {...createElementCodenameDataAttribute("short_bio")}
-                  >
+                  <div className="mt-3 flex flex-col gap-3">
                     <PortableText value={transformToPortableText(bio)} components={bioResolvers} />
                   </div>
                 ) : null}
                 {url ? (
-                  <div className="mt-6" {...createElementCodenameDataAttribute("company_url")}>
+                  <div className="mt-6">
                     <TextLink href={url} external={true}>
                       Visit {title}
                     </TextLink>

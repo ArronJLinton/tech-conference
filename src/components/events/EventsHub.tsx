@@ -223,28 +223,14 @@ const EventsHub: FC<EventsHubProps> = ({ page, events }) => {
             >
               {event.elements.title.value}
             </h2>
-            {start ? (
-              <p
-                className="text-sm text-paper"
-                {...createElementCodenameDataAttribute("start_and_end_date_time")}
-              >
-                {start}
-              </p>
-            ) : null}
-            {end ? (
-              <p
-                className="mt-1 text-sm text-mist"
-                {...createElementCodenameDataAttribute("end_date_time")}
-              >
-                {end}
-              </p>
-            ) : null}
+            {start ? <p className="text-sm text-paper">{start}</p> : null}
+            {end ? <p className="mt-1 text-sm text-mist">{end}</p> : null}
             {venues.length > 0 ? (
               <div className="mt-8">
                 <h3 className="font-family-display text-lg font-semibold tracking-[0.04em] text-paper uppercase">
                   Venue
                 </h3>
-                <ul className="mt-4 grid gap-4" {...createElementCodenameDataAttribute("venue")}>
+                <ul className="mt-4 grid gap-4">
                   {venues.map((venue) => {
                     const image = venue.elements.images.value[0];
                     const website = venue.elements.website.value;
@@ -271,12 +257,7 @@ const EventsHub: FC<EventsHubProps> = ({ page, events }) => {
                             {venue.elements.name.value}
                           </p>
                           {venue.elements.location.value ? (
-                            <p
-                              className="mt-2 text-sm text-mist"
-                              {...createElementCodenameDataAttribute("location")}
-                            >
-                              {venue.elements.location.value}
-                            </p>
+                            <p className="mt-2 text-sm text-mist">{venue.elements.location.value}</p>
                           ) : null}
                           {website ? (
                             <div

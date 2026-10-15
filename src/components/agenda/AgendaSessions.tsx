@@ -134,22 +134,8 @@ const AgendaSessions: FC<AgendaSessionsProps> = ({ sessions, heading, locale = "
               {...createItemDataAttribute(session.system.id)}
             >
               <div>
-                {start ? (
-                  <p
-                    className="text-sm leading-relaxed text-paper"
-                    {...createElementCodenameDataAttribute("start_time")}
-                  >
-                    {start}
-                  </p>
-                ) : null}
-                {end ? (
-                  <p
-                    className="mt-1 text-sm leading-relaxed text-mist"
-                    {...createElementCodenameDataAttribute("end_time")}
-                  >
-                    {end}
-                  </p>
-                ) : null}
+                {start ? <p className="text-sm leading-relaxed text-paper">{start}</p> : null}
+                {end ? <p className="mt-1 text-sm leading-relaxed text-mist">{end}</p> : null}
                 {regions.length > 0 ? (
                   <p
                     className="mt-4 text-[11px] font-semibold tracking-[0.16em] text-cyan uppercase"
