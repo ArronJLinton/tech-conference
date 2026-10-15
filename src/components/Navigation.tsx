@@ -45,7 +45,7 @@ const Navigation: FC<NavigationProps> = ({
             {link.href.startsWith("/") ? (
               <NavLink
                 to={link.href}
-                end={link.href === "/"}
+                end={link.href.split("?")[0] === "/"}
                 className={({ isActive }) =>
                   `${linkClass} ${isActive ? "text-paper" : "text-mist"}`
                 }

@@ -17,6 +17,7 @@ import {
   type PageType,
   type SpeakerType,
 } from "../../model/index.ts";
+import { useDeliveryParams } from "../../utils/deliveryParams.ts";
 import {
   czechLanguage,
   eventLocationLabel,
@@ -114,6 +115,7 @@ const SpeakerCard: FC<{ speaker: SpeakerType }> = ({ speaker }) => {
 const EventsHub: FC<EventsHubProps> = ({ page, events }) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const { environmentId, apiKey } = useAppContext();
+  const delivery = useDeliveryParams();
   const ordered = [...events].sort((left, right) =>
     (left.elements.start_and_end_date_time.value ?? "").localeCompare(
       right.elements.start_and_end_date_time.value ?? "",
@@ -122,9 +124,21 @@ const EventsHub: FC<EventsHubProps> = ({ page, events }) => {
   const selection = selectedEvent(ordered, searchParams.get("event"));
   const useCzech = selection ? usesCzechContent(selection) : false;
   const { data: czechEvent, isPending } = useQuery({
-    queryKey: ["event", environmentId, selection?.system.codename ?? "", czechLanguage],
+    queryKey: [
+      "event",
+      environmentId,
+      selection?.system.codename ?? "",
+      czechLanguage,
+      delivery.preview,
+    ],
     queryFn: () =>
-      fetchEventByCodename(environmentId, apiKey, selection?.system.codename ?? "", czechLanguage),
+      fetchEventByCodename(
+        environmentId,
+        apiKey,
+        selection?.system.codename ?? "",
+        czechLanguage,
+        delivery.preview,
+      ),
     enabled: useCzech,
   });
 
@@ -183,7 +197,13 @@ const EventsHub: FC<EventsHubProps> = ({ page, events }) => {
                   key={item.system.id}
                   type="button"
                   aria-pressed={isSelected}
-                  onClick={() => setSearchParams({ event: item.system.codename })}
+                  onClick={() =>
+                    setSearchParams((current) => {
+                      const next = new URLSearchParams(current);
+                      next.set("event", item.system.codename);
+                      return next;
+                    })
+                  }
                   className={`${locationButtonClass} ${
                     isSelected
                       ? "border border-cyan bg-cyan text-ink"

@@ -1,6 +1,7 @@
 import type { ConferenceInfoCollectionCodename } from "../model/collections/conference-info-collection.generated.ts";
 import type { CzechLanguageCodename, EventType } from "../model/index.ts";
-import { createClient } from "./client.ts";
+import { createClient, withLanguage } from "./client.ts";
+import type { DeliveryParams } from "./deliveryParams.ts";
 
 const defaultLocation = "denver";
 const brnoLocation = "brno";
@@ -33,8 +34,9 @@ export const fetchEventByCodename = async (
   apiKey: string,
   codename: string,
   language: CzechLanguageCodename,
+  preview: boolean,
 ): Promise<EventType | null> => {
-  const response = await createClient(environmentId, apiKey)
+  const response = await createClient(environmentId, apiKey, preview)
     .items<EventType>()
     .equalsFilter("system.codename", codename)
     .languageParameter(language)
@@ -47,15 +49,21 @@ export const fetchEventByCodename = async (
 
 const conferenceInfoCollection = "conference_agenda" satisfies ConferenceInfoCollectionCodename;
 
-export const fetchEvents = async (environmentId: string, apiKey: string): Promise<EventType[]> => {
-  const response = await createClient(environmentId, apiKey)
-    .items<EventType>()
-    .type("event")
-    .equalsFilter("system.collection", conferenceInfoCollection)
-    .orderByAscending("elements.start_and_end_date_time")
-    .depthParameter(1)
-    .limitParameter(100)
-    .toPromise();
+export const fetchEvents = async (
+  environmentId: string,
+  apiKey: string,
+  delivery: DeliveryParams,
+): Promise<EventType[]> => {
+  const response = await withLanguage(
+    createClient(environmentId, apiKey, delivery.preview)
+      .items<EventType>()
+      .type("event")
+      .equalsFilter("system.collection", conferenceInfoCollection)
+      .orderByAscending("elements.start_and_end_date_time")
+      .depthParameter(1)
+      .limitParameter(100),
+    delivery.language,
+  ).toPromise();
 
   return response.data.items;
 };

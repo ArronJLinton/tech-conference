@@ -1,21 +1,30 @@
 import type { FC } from "react";
 import { Link } from "react-router";
+import { deliverySearch, useDeliveryParams } from "../utils/deliveryParams.ts";
 
-const Logo: FC = () => (
-  <Link to="/" className="flex shrink-0 items-center gap-2.5" aria-label="Converge home">
-    <svg width="28" height="28" viewBox="0 0 32 32" aria-hidden="true">
-      <rect width="32" height="32" rx="8" className="fill-cyan" />
-      <path d="M16 7v18M7 16h18" stroke="#071016" strokeWidth="1.7" />
-      <circle cx="16" cy="16" r="3" fill="#071016" />
-      <circle cx="16" cy="7.5" r="1.6" fill="#071016" />
-      <circle cx="16" cy="24.5" r="1.6" fill="#071016" />
-      <circle cx="7.5" cy="16" r="1.6" fill="#071016" />
-      <circle cx="24.5" cy="16" r="1.6" fill="#071016" />
-    </svg>
-    <span className="font-family-display text-[13px] font-semibold tracking-[0.26em] text-paper">
-      CONVERGE
-    </span>
-  </Link>
-);
+const Logo: FC = () => {
+  const delivery = useDeliveryParams();
+
+  return (
+    <Link
+      to={`/${deliverySearch(delivery)}`}
+      className="flex shrink-0 items-center gap-2.5"
+      aria-label="Converge home"
+    >
+      <svg width="28" height="28" viewBox="0 0 32 32" aria-hidden="true">
+        <rect width="32" height="32" rx="8" className="fill-cyan" />
+        <path d="M16 7v18M7 16h18" stroke="#071016" strokeWidth="1.7" />
+        <circle cx="16" cy="16" r="3" fill="#071016" />
+        <circle cx="16" cy="7.5" r="1.6" fill="#071016" />
+        <circle cx="16" cy="24.5" r="1.6" fill="#071016" />
+        <circle cx="7.5" cy="16" r="1.6" fill="#071016" />
+        <circle cx="24.5" cy="16" r="1.6" fill="#071016" />
+      </svg>
+      <span className="font-family-display text-[13px] font-semibold tracking-[0.26em] text-paper">
+        CONVERGE
+      </span>
+    </Link>
+  );
+};
 
 export default Logo;

@@ -17,6 +17,7 @@ import Section from "../components/ui/Section.tsx";
 import { useAppContext } from "../context/AppContext.tsx";
 import "../index.css";
 import { isPageType, type PageType } from "../model/index.ts";
+import { useDeliveryParams } from "../utils/deliveryParams.ts";
 import { fetchEvents } from "../utils/events.ts";
 import { fetchConferenceLandingPage } from "../utils/landingPage.ts";
 
@@ -38,15 +39,22 @@ const featuredItems = (
 
 const LandingPage: FC = () => {
   const { environmentId, apiKey } = useAppContext();
+  const delivery = useDeliveryParams();
   const [{ data: landingPage }, { data: events }] = useSuspenseQueries({
     queries: [
       {
-        queryKey: ["landing-page", environmentId, "conference_agenda"],
-        queryFn: () => fetchConferenceLandingPage(environmentId, apiKey),
+        queryKey: [
+          "landing-page",
+          environmentId,
+          "conference_agenda",
+          delivery.preview,
+          delivery.language,
+        ],
+        queryFn: () => fetchConferenceLandingPage(environmentId, apiKey, delivery),
       },
       {
-        queryKey: ["events", environmentId, "conference_agenda"],
-        queryFn: () => fetchEvents(environmentId, apiKey),
+        queryKey: ["events", environmentId, "conference_agenda", delivery.preview, delivery.language],
+        queryFn: () => fetchEvents(environmentId, apiKey, delivery),
       },
     ],
   });

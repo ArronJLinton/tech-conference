@@ -17,14 +17,16 @@ import SmartLink from "../components/SmartLink.tsx";
 import Section from "../components/ui/Section.tsx";
 import { useAppContext } from "../context/AppContext.tsx";
 import { isAgendaSessionSlotType, isCompanyType, isEventType } from "../model/index.ts";
+import { useDeliveryParams } from "../utils/deliveryParams.ts";
 import { fetchPage } from "../utils/pages.ts";
 
 const ContentPage: FC = () => {
   const { pageCodename } = useParams();
   const { environmentId, apiKey } = useAppContext();
+  const delivery = useDeliveryParams();
   const { data: page } = useSuspenseQuery({
-    queryKey: ["page", environmentId, pageCodename],
-    queryFn: () => fetchPage(environmentId, apiKey, pageCodename ?? ""),
+    queryKey: ["page", environmentId, pageCodename, delivery.preview, delivery.language],
+    queryFn: () => fetchPage(environmentId, apiKey, pageCodename ?? "", delivery),
   });
 
   useEffect(() => {
@@ -36,7 +38,11 @@ const ContentPage: FC = () => {
 
   if (!page) {
     return (
-      <p className="container px-6 py-24 text-mist">This page is not in the published content.</p>
+      <p className="container px-6 py-24 text-mist">
+        {delivery.preview
+          ? "This page could not be found."
+          : "This page is not in the published content."}
+      </p>
     );
   }
 

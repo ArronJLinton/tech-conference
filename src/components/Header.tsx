@@ -3,31 +3,31 @@ import type { FC } from "react";
 import { useState } from "react";
 import { useAppContext } from "../context/AppContext.tsx";
 import { isPageType } from "../model/index.ts";
+import { deliverySearch, useDeliveryParams } from "../utils/deliveryParams.ts";
 import { fetchConferenceLandingPage } from "../utils/landingPage.ts";
 import Container from "./Container.tsx";
 import Logo from "./Logo.tsx";
 import Navigation, { type NavLinkItem } from "./Navigation.tsx";
 import { IconButton } from "./ui/Button.tsx";
 
-const homeLink: NavLinkItem = { label: "Home", href: "/" };
-
 const Header: FC = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const closeMenu = () => setMenuOpen(false);
   const { environmentId, apiKey } = useAppContext();
+  const delivery = useDeliveryParams();
   const { data: landingPage } = useQuery({
-    queryKey: ["landing-page", environmentId, "conference_agenda"],
-    queryFn: () => fetchConferenceLandingPage(environmentId, apiKey),
+    queryKey: ["landing-page", environmentId, "conference_agenda", delivery.preview, delivery.language],
+    queryFn: () => fetchConferenceLandingPage(environmentId, apiKey, delivery),
   });
 
-  const links = [
-    homeLink,
+  const links: NavLinkItem[] = [
+    { label: "Home", href: `/${deliverySearch(delivery)}` },
     ...(landingPage?.elements.untitled_subpages.linkedItems ?? []).flatMap((item) =>
       isPageType(item)
         ? [
             {
               label: item.elements.headline.value || item.system.name,
-              href: `/${item.system.codename}`,
+              href: `/${item.system.codename}${deliverySearch(delivery)}`,
             },
           ]
         : [],

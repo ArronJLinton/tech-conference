@@ -5,6 +5,7 @@ import {
 import type { FC } from "react";
 import { Link } from "react-router";
 import { type EventType, isVenueType } from "../../model/index.ts";
+import { deliverySearch, useDeliveryParams } from "../../utils/deliveryParams.ts";
 import { cardClassName } from "../ui/Card.tsx";
 import Section from "../ui/Section.tsx";
 import SectionHeading from "../ui/SectionHeading.tsx";
@@ -42,6 +43,7 @@ const formatTimestamp = (value: string | null, timeZone: string | null) => {
 };
 
 const EventsSection: FC<EventsSectionProps> = ({ events, eventsPagePath }) => {
+  const delivery = useDeliveryParams();
   if (events.length === 0) {
     return null;
   }
@@ -76,7 +78,7 @@ const EventsSection: FC<EventsSectionProps> = ({ events, eventsPagePath }) => {
           return (
             <li key={event.system.id}>
               <Link
-                to={`${eventsPagePath}?event=${event.system.codename}`}
+                to={`${eventsPagePath}${deliverySearch(delivery, { event: event.system.codename })}`}
                 className={`${cardClassName} flex h-full flex-col overflow-hidden`}
                 {...createItemDataAttribute(event.system.id)}
               >
