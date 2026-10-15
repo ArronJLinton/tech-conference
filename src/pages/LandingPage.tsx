@@ -20,6 +20,7 @@ import { isPageType, type PageType } from "../model/index.ts";
 import { useDeliveryParams } from "../utils/deliveryParams.ts";
 import { fetchEvents } from "../utils/events.ts";
 import { fetchConferenceLandingPage } from "../utils/landingPage.ts";
+import { pagePath } from "../utils/pages.ts";
 
 const featuredItems = (
   featuredContent: readonly IContentItem[],
@@ -108,7 +109,7 @@ const LandingPage: FC = () => {
         ) : null}
         <EventsSection
           events={events}
-          eventsPagePath={`/${eventsPage?.system.codename ?? "events_page"}`}
+          eventsPagePath={eventsPage ? `/${pagePath(eventsPage)}` : ""}
         />
         <FeaturedContent
           items={featuredItems(

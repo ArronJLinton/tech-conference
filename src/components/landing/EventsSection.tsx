@@ -75,23 +75,20 @@ const EventsSection: FC<EventsSectionProps> = ({ events, eventsPagePath }) => {
           );
           const venues = event.elements.venue.linkedItems.filter(isVenueType);
 
-          return (
-            <li key={event.system.id}>
-              <Link
-                to={`${eventsPagePath}${deliverySearch(delivery, { event: event.system.codename })}`}
-                className={`${cardClassName} flex h-full flex-col overflow-hidden`}
-                {...createItemDataAttribute(event.system.id)}
-              >
-                {image ? (
-                  <div {...createElementCodenameDataAttribute("images")}>
-                    <img
-                      src={`${image.url}?auto=format&w=1200`}
-                      alt={image.description ?? image.name ?? title}
-                      className="aspect-[16/9] w-full object-cover"
-                    />
-                  </div>
-                ) : null}
-                <div className="flex flex-1 flex-col p-6">
+          const cardClass = `${cardClassName} flex h-full flex-col overflow-hidden`;
+          const cardAttributes = createItemDataAttribute(event.system.id);
+          const card = (
+            <>
+              {image ? (
+                <div {...createElementCodenameDataAttribute("images")}>
+                  <img
+                    src={`${image.url}?auto=format&w=1200`}
+                    alt={image.description ?? image.name ?? title}
+                    className="aspect-[16/9] w-full object-cover"
+                  />
+                </div>
+              ) : null}
+              <div className="flex flex-1 flex-col p-6">
                   <h3
                     className="font-family-display text-xl font-semibold text-paper"
                     {...createElementCodenameDataAttribute("title")}
@@ -117,8 +114,25 @@ const EventsSection: FC<EventsSectionProps> = ({ events, eventsPagePath }) => {
                       ))}
                     </ul>
                   ) : null}
+              </div>
+            </>
+          );
+
+          return (
+            <li key={event.system.id}>
+              {eventsPagePath ? (
+                <Link
+                  to={`${eventsPagePath}${deliverySearch(delivery, { event: event.system.codename })}`}
+                  className={cardClass}
+                  {...cardAttributes}
+                >
+                  {card}
+                </Link>
+              ) : (
+                <div className={cardClass} {...cardAttributes}>
+                  {card}
                 </div>
-              </Link>
+              )}
             </li>
           );
         })}

@@ -3,10 +3,7 @@ import {
   PortableText,
   type PortableTextReactResolvers,
 } from "@kontent-ai/rich-text-resolver-react";
-import {
-  createElementCodenameDataAttribute,
-  createItemDataAttribute,
-} from "@kontent-ai/smart-link";
+import { createItemDataAttribute } from "@kontent-ai/smart-link";
 import type { FC } from "react";
 import {
   type AgendaSessionSlotType,
@@ -79,14 +76,11 @@ const SpeakerLine: FC<{ speaker: SpeakerType }> = ({ speaker }) => {
           src={`${photo.url}?auto=format&w=96`}
           alt={photo.description ?? speaker.elements.name.value}
           className="size-10 rounded-full object-cover"
-          {...createElementCodenameDataAttribute("photo")}
         />
       ) : null}
       <div>
-        <p className="text-sm text-paper" {...createElementCodenameDataAttribute("name")}>
-          {speaker.elements.name.value}
-        </p>
-        <p className="text-xs text-mist" {...createElementCodenameDataAttribute("title")}>
+        <p className="text-sm text-paper">{speaker.elements.name.value}</p>
+        <p className="text-xs text-mist">
           {speaker.elements.title.value}
           {company ? ` · ${company.elements.title.value}` : ""}
         </p>
@@ -137,20 +131,12 @@ const AgendaSessions: FC<AgendaSessionsProps> = ({ sessions, heading, locale = "
                 {start ? <p className="text-sm leading-relaxed text-paper">{start}</p> : null}
                 {end ? <p className="mt-1 text-sm leading-relaxed text-mist">{end}</p> : null}
                 {regions.length > 0 ? (
-                  <p
-                    className="mt-4 text-[11px] font-semibold tracking-[0.16em] text-cyan uppercase"
-                    {...createElementCodenameDataAttribute("region")}
-                  >
+                  <p className="mt-4 text-[11px] font-semibold tracking-[0.16em] text-cyan uppercase">
                     {regions.join(", ")}
                   </p>
                 ) : null}
                 {session.elements.room.value ? (
-                  <p
-                    className="mt-2 text-sm text-mist"
-                    {...createElementCodenameDataAttribute("room")}
-                  >
-                    Room {session.elements.room.value}
-                  </p>
+                  <p className="mt-2 text-sm text-mist">Room {session.elements.room.value}</p>
                 ) : null}
               </div>
               <div className="flex flex-col gap-4">
@@ -160,26 +146,17 @@ const AgendaSessions: FC<AgendaSessionsProps> = ({ sessions, heading, locale = "
                     .filter(Boolean);
 
                   return (
-                    <div
-                      key={presentation.system.id}
-                      {...createItemDataAttribute(presentation.system.id)}
-                    >
+                    <div key={presentation.system.id}>
                       {topics.length > 0 ? (
-                        <p
-                          className="text-[11px] font-semibold tracking-[0.16em] text-mist uppercase"
-                          {...createElementCodenameDataAttribute("topic")}
-                        >
+                        <p className="text-[11px] font-semibold tracking-[0.16em] text-mist uppercase">
                           {topics.join(" · ")}
                         </p>
                       ) : null}
-                      <h2
-                        className="font-family-display mt-2 text-2xl font-semibold text-paper"
-                        {...createElementCodenameDataAttribute("title")}
-                      >
+                      <h2 className="font-family-display mt-2 text-2xl font-semibold text-paper">
                         {presentation.elements.title.value}
                       </h2>
                       {presentation.elements.summary.value ? (
-                        <div className="mt-3" {...createElementCodenameDataAttribute("summary")}>
+                        <div className="mt-3">
                           <PortableText
                             value={transformToPortableText(presentation.elements.summary.value)}
                             components={summaryResolvers}
@@ -190,10 +167,7 @@ const AgendaSessions: FC<AgendaSessionsProps> = ({ sessions, heading, locale = "
                   );
                 })}
                 {speakers.length > 0 ? (
-                  <ul
-                    className="flex flex-col gap-3"
-                    {...createElementCodenameDataAttribute("assigned_speakers")}
-                  >
+                  <ul className="flex flex-col gap-3">
                     {speakers.map((speaker) => (
                       <li key={speaker.system.id}>
                         <SpeakerLine speaker={speaker} />

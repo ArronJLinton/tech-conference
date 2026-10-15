@@ -5,6 +5,7 @@ import { useAppContext } from "../context/AppContext.tsx";
 import { isPageType } from "../model/index.ts";
 import { deliverySearch, useDeliveryParams } from "../utils/deliveryParams.ts";
 import { fetchConferenceLandingPage } from "../utils/landingPage.ts";
+import { pagePath } from "../utils/pages.ts";
 import Container from "./Container.tsx";
 import Logo from "./Logo.tsx";
 import Navigation, { type NavLinkItem } from "./Navigation.tsx";
@@ -27,7 +28,7 @@ const Header: FC = () => {
         ? [
             {
               label: item.elements.headline.value || item.system.name,
-              href: `/${item.system.codename}${deliverySearch(delivery)}`,
+              href: `/${pagePath(item)}${deliverySearch(delivery)}`,
             },
           ]
         : [],
